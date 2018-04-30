@@ -34,13 +34,13 @@ class InfluxReporter:
                         }
         self.buffer.append(buffer_entry)
 
-    def transmit(self):
+    def transmit_buffer(self):
         self.client.write_points(json_body)
 
 
     def report(self, measurement, sensor, location, value):
         self.add_measurement(measurement, sensor, location, value)
-        self.transmit()
+        self.transmit_buffer()
 
 
 if __name__ == "__main__":
