@@ -1,5 +1,5 @@
 import json
-import time
+import datetime
 
 from influxdb import InfluxDBClient
 
@@ -30,12 +30,13 @@ class InfluxReporter:
                         "fields" : {
                             "value": value,
                             },
-                        "time" : time.time()
+                        "time" : datetime.datetime.now().isoformat()
                         }
         self.buffer.append(buffer_entry)
 
     def transmit_buffer(self):
-        self.client.write_points(json_body)
+        self.client.write_points(self.buffer)
+        self.buffer = list()
 
 
     def report(self, measurement, sensor, location, value):
