@@ -56,11 +56,13 @@ while True:
     segments[0] |= 0x08 * (blink < 10)
     blink = (blink + 1) % 20
     segment_bricklet.set_segments(segments, 7, False)
-    reporter.report("co2", "K30", "CAB F81", co2_concentration)
+    reporter.add_measurement("co2", "K30", "CAB F81", co2_concentration)
 
     illuminance = ambient_light_bricklet.get_illuminance() / 100.0
     print("Illuminance: {} lx".format(illuminance))
-    reporter.report("ambient_light", "LTR329ALS", "CAB F81", illuminance)
+    reporter.add_measurement("ambient_light", "LTR329ALS", "CAB F81", illuminance)
+
+    reporter.transmit_buffer()
 
     wait = max(0, start + 1 - time.time())
     time.sleep(wait)
