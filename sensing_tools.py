@@ -41,7 +41,7 @@ class InfluxReporter:
                             },
                         "time" : now.isoformat()
                         }
-        print(buffer_entry)
+        #print(buffer_entry)
         self.buffer.append(buffer_entry)
 
     def transmit_buffer(self):
