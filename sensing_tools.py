@@ -29,6 +29,8 @@ class InfluxReporter:
         self.buffer = list()
 
     def add_measurement(self, measurement, sensor, location, value):
+        utc_now = datetime.datetime.now(datetime.timezone.utc)
+        now = utc_now.astimezone()
         buffer_entry = { "measurement": measurement,
                         "tags": {
                             "sensor" :   sensor,
@@ -37,8 +39,9 @@ class InfluxReporter:
                         "fields" : {
                             "value": value,
                             },
-                        "time" : datetime.datetime.now().isoformat()
+                        "time" : now.isoformat()
                         }
+        print(buffer_entry)
         self.buffer.append(buffer_entry)
 
     def transmit_buffer(self):
